@@ -1,6 +1,6 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 
-from curl_cffi import requests
+import requests
 
 from main import PROXIES
 from main.plugins.downloaded import is_downloaded
@@ -35,8 +35,7 @@ def get_json_data(page_num, ACCESS_TOKEN):
 
     response = requests.get(
         'https://www.udemy.com/api-2.0/users/me/subscribed-courses/',
-        headers=headers, params = params, proxies=PROXIES, impersonate="chrome110")
-    print(response.text)
+        headers=headers, params = params, proxies=PROXIES)
     return response.json()
 
 
@@ -98,7 +97,7 @@ async def get_course_info(courseid:str, ACCESS_TOKEN):
         'seen': '1',
 
     }
-    json = requests.get(url=toget,headers=headers,impersonate="chrome110").json()
+    json = requests.get(url=toget,headers=headers).json()
     # LOGGER.info(json)
     id = json.get('id')
     url = json.get('url')

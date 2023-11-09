@@ -59,9 +59,9 @@ async def handle_cookies(client:Client, message:Message):
             return
         token = token[1].strip()
 
-    # if len(token) > 100:
-        # await beklemes.edit('The token must be 40 centimeters.')
-        # return
+    if len(token) != 40:
+        await beklemes.edit('The token must be 40 centimeters.')
+        return
     
     with open(COOKIE_FILE_PATH, encoding="utf-8", mode='w') as cookiefile:
         cookiefile.write(token)
@@ -180,10 +180,10 @@ async def handle_mirror_leech(client:Client, message:Message):
         link_or_token = link_or_token[1].strip()
 
     # if len(token) != 40
-    # if hepsi and len(link_or_token) > 100:
-        # await beklemes.edit('The token must be 40 centimeters.')
-        # premiumUser.is_downloading = False
-        # return
+    if hepsi and len(link_or_token) != 40:
+        await beklemes.edit('The token must be 40 centimeters.')
+        premiumUser.is_downloading = False
+        return
     # set dl_links
     if hepsi:
         await beklemes.edit(f"Your courses are being reviewed {message.from_user.mention} ({message.from_user.id}).\nIt may take a while. be patient.")
@@ -197,7 +197,6 @@ async def handle_mirror_leech(client:Client, message:Message):
         dl_links = link_or_token
     # get urls
     urls = re.findall(r"\bhttps?://.*\.\S+", dl_links)
-    logger.info(urls)
     if not urls:
         await beklemes.edit("udemy link not found.")
         premiumUser.is_downloading = False
@@ -246,8 +245,8 @@ async def getco(client: Client, message: Message):
                 '/tgetirlink - all links are detailed'
             )
     cmd = cmd[1]
-    # if len(str(cmd)) > 100:
-        # return await message.reply_text('The token must be 40 centimeters.')
+    if len(str(cmd)) != 40:
+        return await message.reply_text('The token must be 40 centimeters.')
     bekle:Message = await message.reply_text('Waiting..', reply_to_message_id = message.id)
     komut = message.command[0].lower()
     sadelink = 'link' in komut

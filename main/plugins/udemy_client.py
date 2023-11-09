@@ -3,6 +3,7 @@ import re
 import sys
 import time
 import cloudscraper
+import requests
 import m3u8
 import base64
 from html.parser import HTMLParser as compat_HTMLParser
@@ -10,7 +11,6 @@ import yt_dlp
 from .. import IS_SUBSCRIPTION_COURSE, PROXIES, SessionVars
 from .constants import *
 from requests.exceptions import ConnectionError as conn_error
-from curl_cffi import requests
 from bs4 import BeautifulSoup
 from pathvalidate import sanitize_filename
 
@@ -690,7 +690,7 @@ class UdemyAuth(object):
 class Session(object):
     def __init__(self):
         self._headers = HEADERS
-        self._session = requests.Session(impersonate="chrome110")
+        self._session = requests.sessions.Session()
 
     def _set_auth_headers(self, bearer_token=""):
         self._headers["Authorization"] = "Bearer {}".format(bearer_token)

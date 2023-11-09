@@ -10,7 +10,7 @@ import sys
 import time
 from dotenv import load_dotenv
 from pyrogram import Client
-from curl_cffi import requests
+import requests
 from main.plugins.constants import COOKIE_FILE_PATH, CACHE_KEY_FILE_PATH, DOWNLOAD_DIR, SAVED_DIR, TEMP_DIR
 from main.plugins.var_holder import VarHolder
 from main.plugins import premiumUser
@@ -37,9 +37,9 @@ def get_config_from_url(configurl: str):
             snipid, apikey = configurl.split(maxsplit=1)
             main_api = f"https://gitlab.com/api/v4/snippets/{snipid}/raw"
             headers = {'content-type': 'application/json', 'PRIVATE-TOKEN': apikey}
-            res = requests.get(main_api, headers=headers, impersonate="chrome110")
+            res = requests.get(main_api, headers=headers)
         else:
-            res = requests.get(configurl, impersonate="chrome110")
+            res = requests.get(configurl)
         if res.status_code == 200:
             logger.info("Config retrieved remotely. Status 200.")
             with open('config.env', 'wb+') as f:
@@ -248,27 +248,27 @@ except Exception as e:
     logger.error(e)
     sys.exit(1)
 
-# try:
-    # premiumUser.premumuUserCli = Client(
-        # name="udex",
-        # api_id=API_ID,
-        # api_hash=API_HASH,
-        # session_string=PREMIUM_USER,
-        # workers=30
-    # )
-    # premiumUser.premumuUserCli.start()
-    # if not premiumUser.premumuUserCli.me.is_premium:
-        # logger.error("no premium users")
-        # premiumUser.premumuUserCli.stop()
-        # premiumUser.premumuUserCli = None
-        # TG_SPLIT_SIZE = 2097151000
-    # else:
-        # logger.info("premium user detected")
-        # for i in OWNER_ID:
-            # try: bot.send_message(i,"premium user started")
-            # except: pass
-        # TG_SPLIT_SIZE = 4194304000
-# except Exception as e:
-    # logger.error(e)
-premiumUser.premumuUserCli = None
-TG_SPLIT_SIZE = 2097151000
+try:
+    premiumUser.premumuUserCli = Client(
+        name="udex",
+        api_id=API_ID,
+        api_hash=API_HASH,
+        session_string=PREMIUM_USER,
+        workers=30
+    )
+    premiumUser.premumuUserCli.start()
+    if not premiumUser.premumuUserCli.me.is_premium:
+        logger.error("no premium users")
+        premiumUser.premumuUserCli.stop()
+        premiumUser.premumuUserCli = None
+        TG_SPLIT_SIZE = 2097151000
+    else:
+        logger.info("premium user detected")
+        for i in OWNER_ID:
+            try: bot.send_message(i,"premium user started")
+            except: pass
+        TG_SPLIT_SIZE = 4194304000
+except Exception as e:
+    logger.error(e)
+    premiumUser.premumuUserCli = None
+    TG_SPLIT_SIZE = 2097151000
