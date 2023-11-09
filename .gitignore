@@ -1,0 +1,13 @@
+x.py
+eski.env
+__pycache__
+*.pyc
+log.txt
+out_dir
+temp_dir
+saved
+ok
+config.env
+udbzv5.rar
+main/plugins/download2.py
+main/plugins/udemy_original.txt

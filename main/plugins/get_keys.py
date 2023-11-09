@@ -3,7 +3,7 @@ from pywidevine.device import Device
 from pywidevine.pssh import PSSH
 from .. import logger
 from .constants import WVD_FILE_PATH
-import requests
+from curl_cffi import requests
 import xmltodict
 import base64
 import logging 
@@ -47,7 +47,7 @@ class UdemyKeysExtracter:
 
     def get_pssh(self, init_url):
         logger.info(f"INIT URL: {init_url}")
-        res = requests.get(init_url, headers=self.headers)
+        res = requests.get(init_url, headers=self.headers,impersonate="chrome110")
         if not res.ok:
             logger.exception("Could not download init segment: " + res.text)
             return
@@ -60,7 +60,7 @@ class UdemyKeysExtracter:
         session_id = cdm.open()
         challenge = cdm.get_license_challenge(session_id, PSSH(pssh))
         logger.info("Sending license request now")
-        license = requests.post(license_url, headers=self.headers, data=challenge)
+        license = requests.post(license_url, headers=self.headers, data=challenge,impersonate="chrome110")
         try:
             str(license.content, "utf-8")
         except:
