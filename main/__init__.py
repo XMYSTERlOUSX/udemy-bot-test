@@ -54,11 +54,11 @@ SessionVars = VarHolder()
 GLOBAL_RC_INST= []
 uptime = time.time()
 
-if CONFIG_FILE_URL := os.environ.get('CONFIG_FILE_URL', None):
-    get_config_from_url(CONFIG_FILE_URL)
-else:
-    logger.info("Locale config.env")
-    load_dotenv("config.env")
+# if CONFIG_FILE_URL := os.environ.get('CONFIG_FILE_URL', None):
+    # get_config_from_url(CONFIG_FILE_URL)
+# else:
+    # logger.info("Locale config.env")
+load_dotenv("config.env")
 
 if not os.path.exists(DOWNLOAD_DIR):
     os.makedirs(DOWNLOAD_DIR)
