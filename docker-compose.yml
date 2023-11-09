@@ -1,9 +1,26 @@
 version: "3.3"
 
 services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - VPN_SERVICE_PROVIDER=surfshark
+      - VPN_TYPE=openvpn
+      - OPENVPN_USER=Sv7Hxhs4kQURhp9sCTTYxsHM
+      - OPENVPN_PASSWORD=Ghf95LnQHBkzvZcySBWqGjz4
+      - SERVER_COUNTRIES=United States
+    ports:
+      - "80:80"
+      - "8080:8080"
+    restart: always
+
   app:
     build: .
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun  # <- This line should be an array, not a dictionary
     command: bash start.sh
-    restart: on-failure
-    ports:
-      - "90:90"
+    restart: always
