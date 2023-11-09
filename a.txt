@@ -1,0 +1,115 @@
+# UDBZv5
+
+## Deploy on VPS: 
+
+1. **Installing requirements**
+
+ - Install Docker(skip this if deploying without docker).
+
+        sudo apt install snapd
+        sudo snap install docker
+
+2. **Set up config file**
+
+- cp config_sample.env config.env 
+
+- Fill up variables.
+
+3. **Deploying on VPS Using Docker**
+
+- Start Docker daemon (skip if already running), if installed by snap then use 2nd command:
+    
+        sudo dockerd
+        sudo snap start docker
+
+     Note: If not started or not starting, run the command below then try to start.
+
+        sudo apt install docker.io
+
+- Build Docker image:
+
+        sudo docker build . -t udemy-dl-bot 
+
+- Run the image:
+
+        sudo docker run udemy-dl-bot 
+
+- To stop the image:
+
+        sudo docker ps
+        sudo docker stop id
+
+- To clear the container:
+
+        sudo docker container prune
+
+- To delete the images:
+
+        sudo docker image prune -a
+
+**NOTE**: If you want to use port other than 80, change it in [docker-compose.yml](https://github.com/XMYSTERlOUSX/Udemy-bot/blob/main/docker-compose.yml) also.
+
+```
+sudo apt install docker-compose
+```
+- Build and run Docker image or to view current running image:
+```
+sudo docker-compose up
+```
+- After editing files with nano for example (nano start.sh):
+```
+sudo docker-compose up --build
+```
+- To stop the running image:
+```
+sudo docker-compose stop
+```
+- To run the image:
+```
+sudo docker-compose start      
+ 
+```
+4. **Deploying on VPS without Docker**
+```
+- sudo apt update 
+- sudo apt install -y python3.8 
+- sudo apt install -y python3-venv 
+- python3 -m venv venv 
+- source venv/bin/activate 
+- pip install -r requirements.txt 
+- sudo apt -qq install -y git wget curl python3 python3-pip locales ffmpeg aria2 yt-dlp
+- curl https://rclone.org/install.sh | bash
+- cp bin/mp4decrypt /usr/bin
+- cp bin/N_m3u8DL-RE /usr/bin
+- chmod +x /usr/bin/mp4decrypt
+- chmod +x /usr/bin/N_m3u8DL-RE
+- chmod 777 start.sh 
+- ./start.sh
+```
+## UDBZv5 by Zorgof
+
+```
+start - hoş geldin
+cookies - udemy çerezini ayarla
+mirror - buluta yükle (dosya) 💎
+allmirror - tümünü buluta yükle (dosya) 💎
+zipmirror - buluta yükle (arşiv) 💎
+allzipmirror - tümünü buluta yükle (arşiv) 💎
+leech - telegrama yükle (dosya) 💎
+allleech - tümünü telegrama yükle (dosya) 💎
+zipleech - telegrama yükle (arşiv)
+allzipleech - tümünü telegrama yükle (arşiv)
+boyut - anlık indirilen boyut
+bilgi - kurs bilgisi getir
+getir - kursları göster (inmeyenler ayrıntılı) 💎
+tgetir - kursları göster (tümü ayrıntılı) 💎
+getirlink - kursları göster (inmeyen linkler ayrıntılı) 💎
+tgetirlink - kursları göster (tüm linkler ayrıntılı) 💎
+indi - kursu indi olarak ayarla 💎
+inmedi - kursu inmedi olarak ayarla 💎
+server - sunucu istatistikleri 💎
+restart - botu yeniden başlat 💎
+exit - botu kapat 💎
+shell - kabuk komutu çalıştır 💎
+log - logları gönder 💎
+```
